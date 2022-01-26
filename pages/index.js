@@ -10,12 +10,16 @@ import {
   Toast,
   Frame,
 } from "@shopify/polaris";
+// https://polaris.shopify.com/components/structure/page
+
 import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
+
 import { Provider, ResourcePicker } from "@shopify/app-bridge-react";
+// https://shopify.dev/apps/tools/app-bridge/getting-started
 
 import { ProductUpdateMutation } from "../graphql/ProductUpdate";
 import { useMutation } from "react-apollo";
