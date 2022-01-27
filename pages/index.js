@@ -9,6 +9,10 @@ import {
   EmptyState,
   Toast,
   Frame,
+  Form,
+  FormLayout,
+  Layout,
+  CalloutCard,
 } from "@shopify/polaris";
 // https://polaris.shopify.com/components/structure/page
 
@@ -17,6 +21,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
+import Dashboard from "../components/Dashboard";
 
 import { Provider, ResourcePicker } from "@shopify/app-bridge-react";
 // https://shopify.dev/apps/tools/app-bridge/getting-started
@@ -99,6 +104,63 @@ const Index = () => {
   return (
     <>
       <Page
+        title="App configuration"
+        // primaryAction={{
+        //   content: "Select product",
+        //   onAction: () => setOpenRes(true),
+        // }}
+      >
+          <Card>
+            <Card.Section>
+              <Heading>
+                Configure connection to PI™ - Commerce Desktop Suite
+              </Heading>
+              <br />
+              <p>
+                Shopify store management has never been easier. Connect [Store]
+                to PI™ - Commerce Desktop Suite to unlock your store's potential
+                today!{" "}
+              </p>
+              <br />
+              <div style={{ display: "flex", gap: "5px" }}>
+                <Button>Learn more</Button>
+                <Button type="button" onClick={() => router.push("/config")}>
+                  Connect
+                </Button>
+                <Button type="button">Download</Button>
+              </div>
+            </Card.Section>
+          </Card>
+          <br />
+        <Dashboard />
+      </Page>
+
+      {/* <Page
+        title="App configuration"
+        primaryAction={{
+          content: "Select product",
+          onAction: () => setOpenRes(true),
+        }}
+      >
+        <CalloutCard
+          title="Configure connection to PI™ - Commerce Desktop Suite"
+          primaryAction={{  }}
+          secondaryAction={{
+            content: "Learn more about PI™ - Commerce Desktop Suite",
+          }}
+          onDismiss={() => {}}
+        >
+          <p>
+            Shopify store management has never been easier. Connect [Store] to
+            PI™ - Commerce Desktop Suite to unlock your store's potential today!{" "}
+          </p>
+          <Button type="button" onClick={() => router.push("/config")}>
+            Config
+          </Button>
+        </CalloutCard>
+      </Page> */}
+
+      {/* <Page
         title="Product selector"
         primaryAction={{
           content: "Select product",
@@ -113,8 +175,8 @@ const Index = () => {
         />
         <Heading>Shopify App Test Page</Heading>
         <Button onClick={makeCall}>Add product</Button>
-        <Button type="button" onClick={() => router.push("/localpreview")}>
-          Click me
+        <Button type="button" onClick={() => router.push("/config")}>
+          Config
         </Button>
       </Page>
       <Frame>
@@ -175,7 +237,7 @@ const Index = () => {
           </Card>
           {toastMarkup}
         </Page>
-      </Frame>
+      </Frame> */}
     </>
   );
 };
