@@ -19,8 +19,6 @@ import {
 import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { gql } from "apollo-boost";
-import { Query } from "react-apollo";
 import Dashboard from "../components/Dashboard";
 
 import { Provider, ResourcePicker } from "@shopify/app-bridge-react";
@@ -160,7 +158,7 @@ const Index = () => {
         </CalloutCard>
       </Page> */}
 
-      {/* <Page
+      <Page
         title="Product selector"
         primaryAction={{
           content: "Select product",
@@ -237,7 +235,7 @@ const Index = () => {
           </Card>
           {toastMarkup}
         </Page>
-      </Frame> */}
+      </Frame>
     </>
   );
 };

@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from "react";
-import { Card, DataTable, Page } from "@shopify/polaris";
+import { Card, DataTable, Page, Button } from "@shopify/polaris";
+import { ResourcePicker } from "@shopify/app-bridge-react";
+import ProductResourcePicker from "./helpers/ProductResourcePicker";
+import CollectionResourcePicker from "./helpers/CollectionResourcePicker";
 
 export default function SortableDataTableExample() {
   let apiData = [
@@ -10,12 +13,20 @@ export default function SortableDataTableExample() {
   ];
 
   const [data, setData] = useState(apiData);
+  // const [pickerOpen, setPickerOpen] = useState(false);
+  const [openProducts, setOpenProducts] = useState(false);
+  const [openCollections, setOpenCollections] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [collections, setCollections] = useState([]);
+
+  console.log(data);
 
   const productTableDisplayData = useMemo(() => {
     return data.map((product) => [
-      product["product"],
-      product["price"],
-      product["sku"],
+      "",
+      product["vendor"],
+      product["variants"][0]["sku"],
+      product["title"],
       product["qty"],
       product["sale"],
     ]);
@@ -56,30 +67,54 @@ export default function SortableDataTableExample() {
 
   return (
     // <Page title="Sales by product">
-      <Card title="Products">
-        <DataTable
-          columnContentTypes={[
-            "text",
-            "numeric",
-            "numeric",
-            "numeric",
-            "numeric",
-          ]}
-          headings={[
-            "Product",
-            "Price",
-            "SKU Number",
-            "Net quantity",
-            "Net sales",
-          ]}
-          rows={productTableDisplayData}
-          // totals={['', '', '', 255, '$155,830.00']}
-          sortable={[true, true, true, true, true]}
-          defaultSortDirection="descending"
-          initialSortColumnIndex={0}
-          onSort={handleSort}
-        />
-      </Card>
+    <Card title="Products">
+      <Card.Section>
+        <div style={{ display: "flex", gap: "5px" }}>
+          <ProductResourcePicker
+            openState={setOpenProducts}
+            setData={setData}
+            isOpen={openProducts}
+          />
+          {/* <CollectionResourcePicker
+            openState={setOpenCollections}
+            setData={setCollections}
+            isOpen={openCollections}
+          /> */}
+        </div>
+      </Card.Section>
+      <DataTable
+        columnContentTypes={[
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+        ]}
+        headings={[
+          "Main Image",
+          "Vendor",
+          "SKU",
+          "Title",
+          "Status",
+          "Sales Channel",
+          "Collection",
+          "Published",
+          "Cost",
+          "Sell",
+        ]}
+        rows={productTableDisplayData}
+        // totals={['', '', '', 255, '$155,830.00']}
+        sortable={[true, true, true, true, true]}
+        defaultSortDirection="descending"
+        initialSortColumnIndex={0}
+        onSort={handleSort}
+      />
+    </Card>
     // </Page>
   );
 }
