@@ -12,7 +12,7 @@ export default function SortableDataTableExample() {
     { product: "ball", price: 10, sku: "qpt665", qty: 400, sale: 2000 },
   ];
 
-  const [data, setData] = useState(apiData);
+  const [data, setData] = useState([]);
   // const [pickerOpen, setPickerOpen] = useState(false);
   const [openProducts, setOpenProducts] = useState(false);
   const [openCollections, setOpenCollections] = useState(false);
@@ -25,7 +25,7 @@ export default function SortableDataTableExample() {
     return data.map((product) => [
       "",
       product["vendor"],
-      product["variants"][0]["sku"],
+      product["variants"][0]["sku"] || "",
       product["title"],
       product["qty"],
       product["sale"],
@@ -70,50 +70,52 @@ export default function SortableDataTableExample() {
     <Card title="Products">
       <Card.Section>
         <div style={{ display: "flex", gap: "5px" }}>
-          <ProductResourcePicker
+          {/* <ProductResourcePicker
             openState={setOpenProducts}
             setData={setData}
             isOpen={openProducts}
-          />
-          {/* <CollectionResourcePicker
+          /> */}
+          <CollectionResourcePicker
             openState={setOpenCollections}
             setData={setCollections}
             isOpen={openCollections}
-          /> */}
+          />
         </div>
       </Card.Section>
-      <DataTable
-        columnContentTypes={[
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-          "text",
-        ]}
-        headings={[
-          "Main Image",
-          "Vendor",
-          "SKU",
-          "Title",
-          "Status",
-          "Sales Channel",
-          "Collection",
-          "Published",
-          "Cost",
-          "Sell",
-        ]}
-        rows={productTableDisplayData}
-        // totals={['', '', '', 255, '$155,830.00']}
-        sortable={[true, true, true, true, true]}
-        defaultSortDirection="descending"
-        initialSortColumnIndex={0}
-        onSort={handleSort}
-      />
+      {data.length > 0 && (
+        <DataTable
+          columnContentTypes={[
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+          ]}
+          headings={[
+            "Main Image",
+            "Vendor",
+            "SKU",
+            "Title",
+            "Status",
+            "Sales Channel",
+            "Collection",
+            "Published",
+            "Cost",
+            "Sell",
+          ]}
+          rows={productTableDisplayData}
+          // totals={['', '', '', 255, '$155,830.00']}
+          sortable={[true, true, true, true, true]}
+          defaultSortDirection="descending"
+          initialSortColumnIndex={0}
+          onSort={handleSort}
+        />
+      )}
     </Card>
     // </Page>
   );

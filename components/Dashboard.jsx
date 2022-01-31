@@ -1,5 +1,5 @@
 import { Card, Layout, ResourceList, TextStyle, Thumbnail } from "@shopify/polaris";
-import SortableDataTable from "./SortTable";
+import SortableDataTableProducts from "./SortTableProducts";
 
 function Dashboard() {
   return (
@@ -121,7 +121,7 @@ function Dashboard() {
         </Card>
       </Layout.Section>
       <Layout.Section>
-        <SortableDataTable />
+        <SortableDataTableProducts />
       </Layout.Section>
     </Layout>
   );
