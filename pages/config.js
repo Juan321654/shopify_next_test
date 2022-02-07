@@ -14,10 +14,13 @@ import {
   FormLayout,
 } from "@shopify/polaris";
 import { useRouter } from "next/router";
-import { SHOP_INFO } from '../currentShop.js';
+import { SHOP_INFO } from '../currentShop'
 
 function config() {
   const router = useRouter();
+  // const SHOP = process.env.NEXT_PUBLIC_SHOP;
+  // const ACCESS_TOKEN = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
+
   return (
     <Page>
       <Card>

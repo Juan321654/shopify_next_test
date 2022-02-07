@@ -58,12 +58,28 @@ app.prepare().then(async () => {
           );
         }
 
+        fs.readFile("./.env", (err, data) => {
+          if (err) {
+            console.log(err);
+          }
+          const env = dotenv.parse(data);
+
+          fs.writeFile(
+            "./.env",
+            `SHOPIFY_API_KEY=${env["SHOPIFY_API_KEY"]}\nSHOPIFY_API_SECRET=${env["SHOPIFY_API_SECRET"]}\nSHOP=${env["SHOP"]}\nSCOPES=${env["SCOPES"]}\nHOST=${env["HOST"]}\nNEXT_PUBLIC_SHOP=${shop}\nNEXT_PUBLIC_ACCESS_TOKEN=${accessToken}`,
+            (err) => {
+              if (err) console.log(err);
+              console.log("The file has been saved!");
+            }
+          );
+        });
+
         fs.writeFile(
           "./currentShop.js",
           `export const SHOP_INFO = {
-              "shop": "${shop}",
-              "accessToken": "${accessToken}",
-          }`,
+            shop: "${shop}",
+            accessToken: "${accessToken}",
+        }`,
           (err) => {
             if (err) console.log(err);
             console.log("The file has been saved!");
