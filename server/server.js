@@ -6,6 +6,7 @@ import Shopify, { ApiVersion } from "@shopify/shopify-api";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
+import fs from "fs";
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -40,7 +41,7 @@ app.prepare().then(async () => {
         // Access token and shop available in ctx.state.shopify
         const { shop, accessToken, scope } = ctx.state.shopify;
         const host = ctx.query.host;
-        ACTIVE_SHOPIFY_SHOPS[shop] = scope;
+        ACTIVE_SHOPIFY_SHOPS[shop] = accessToken;
 
         const response = await Shopify.Webhooks.Registry.register({
           shop,
@@ -56,6 +57,20 @@ app.prepare().then(async () => {
             `Failed to register APP_UNINSTALLED webhook: ${response.result}`
           );
         }
+
+        fs.writeFile(
+          "./currentShop.js",
+          `export const SHOP_INFO = {
+              "shop": "${shop}",
+              "accessToken": "${accessToken}",
+          }`,
+          (err) => {
+            if (err) console.log(err);
+            console.log("The file has been saved!");
+          }
+        );
+
+        console.log(ACTIVE_SHOPIFY_SHOPS);
 
         // Redirect to app with shop parameter upon auth
         ctx.redirect(`/?shop=${shop}&host=${host}`);

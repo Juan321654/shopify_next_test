@@ -14,6 +14,7 @@ import {
   FormLayout,
 } from "@shopify/polaris";
 import { useRouter } from "next/router";
+import { SHOP_INFO } from '../currentShop.js';
 
 function config() {
   const router = useRouter();
@@ -25,25 +26,28 @@ function config() {
           <br />
           <TextField
             label="Store name"
-            // value={appendToTitle}
+            value={SHOP_INFO.shop}
             // onChange={setAppendToTitle}
           />
           <br />
           <TextField
             // onBlur={() => navigator.clipboard.writeText("someLongId")}
-            label="Store password"
-            value={"hfjkdhfask3483h378dfh3uhdue"}
+            label="Access Token"
+            value={SHOP_INFO.accessToken}
+            type="password"
+            onFocus={(e) => (e.target.type = "text")}
+            onBlur={(e) => (e.target.type = "password")}
             // onChange={setAppendToDescription}
             // multiline={3}
           />
           <br />
-          <TextField
+          {/* <TextField
             // onBlur={() => navigator.clipboard.writeText("someLongId")}
             label="API key"
             value={"hfjkdhfask3483h378dfh3uhdue"}
             // onChange={setAppendToDescription}
             // multiline={3}
-          />
+          /> */}
           <br />
           <Button onClick={() => router.push("/")}>Back</Button>
         </Card.Section>
