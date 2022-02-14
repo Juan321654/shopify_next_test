@@ -7,6 +7,8 @@ import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
 import fs from "fs";
+import { User } from "./models";
+import bodyParser from "koa-bodyparser";
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -33,6 +35,7 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 
 app.prepare().then(async () => {
   const server = new Koa();
+  server.use(bodyParser());
   const router = new Router();
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
@@ -116,6 +119,28 @@ app.prepare().then(async () => {
       await Shopify.Utils.graphqlProxy(ctx.req, ctx.res);
     }
   );
+
+  router.get("/users", async (ctx) => {
+    const users = await User.findAll();
+    ctx.body = users;
+  });
+
+
+  router.post("/users", async (ctx) => {
+    // await handle(ctx.req, ctx.res);
+    console.log(ctx);
+    const name = ctx.request.body;
+    const user = await User.create(name);
+    ctx.body = user;
+  });
+
+  router.put("/users/:id", async (ctx) => {
+    console.log(ctx.request);
+    const user = await User.findByPk(ctx.params.id);
+    user.name = ctx.request.body.name;
+    await user.save();
+    ctx.body = user;
+  });
 
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear

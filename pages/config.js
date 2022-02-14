@@ -29,7 +29,7 @@ function config() {
           <br />
           <TextField
             label="Store name"
-            value={SHOP_INFO.shop}
+            value={SHOP_INFO.shop.replace(".myshopify.com", "")}
             // onChange={setAppendToTitle}
           />
           <br />

@@ -1,4 +1,4 @@
 export const SHOP_INFO = {
             shop: "notmystoreyet.myshopify.com",
-            accessToken: "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",
+            accessToken: "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",
         }
